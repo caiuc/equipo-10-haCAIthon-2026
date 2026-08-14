@@ -1,0 +1,180 @@
+@import 'tailwindcss';
+
+/*
+  PROCE-SALUD — sistema visual.
+
+  El color solo aparece cuando significa algo clinico. La paleta cromatica es
+  exactamente la de los seis estados definidos en documentation.MD 6.1; todo lo
+  demas es neutro. Un tablero donde el color decora es un tablero donde la
+  alerta oncologica deja de saltar a la vista.
+*/
+@theme {
+  /* Neutros: gris-verde frio de pasillo clinico, tinta petroleo */
+  --color-ground: #eef1ef;
+  --color-surface: #ffffff;
+  --color-sunken: #e3e8e5;
+  --color-rule: #d3dad8;
+  --color-rule-strong: #b2bfbb;
+  --color-ink: #0e1f23;
+  --color-ink-soft: #4c5c5e;
+  --color-ink-faint: #7d8c8d;
+
+  /* Semanticos: uno por insignia de estado, y nada mas */
+  --color-onco: #c8352c;
+  --color-antiguo: #c4661a;
+  --color-incompleta: #96730a;
+  --color-ges: #1f5f8b;
+  --color-estandar: #6e7b79;
+  --color-registro: #4a4458;
+
+  --font-display: 'Archivo', system-ui, sans-serif;
+  --font-body: 'Public Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* El foco tiene que verse sobre fondo claro y sobre la banda oscura. */
+  :focus-visible {
+    outline: 2px solid var(--color-ges);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-ges) 22%, transparent);
+  }
+
+  /* Los datos numericos alinean en columna como un listado impreso. */
+  .tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /*
+    Microrrotulo de formulario institucional: versalitas espaciadas sobre cada
+    control, como en un formulario timbrado.
+  */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+
+  .field {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-rule);
+    border-radius: 2px;
+    padding: 0.5rem 0.65rem;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-ink);
+    transition: border-color 120ms ease;
+  }
+
+  .field:hover:not(:disabled) {
+    border-color: var(--color-rule-strong);
+  }
+
+  .field:disabled {
+    background: var(--color-sunken);
+    color: var(--color-ink-faint);
+  }
+
+  select.field {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%234c5c5e' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    padding-right: 1.8rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    padding: 0.55rem 1rem;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      color 120ms ease;
+  }
+
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-ground);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-ges);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border-color: var(--color-rule-strong);
+    color: var(--color-ink);
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--color-surface);
+    border-color: var(--color-ink);
+  }
+
+  /*
+    Cinta de alerta sanitaria: rayado diagonal en el borde superior de la
+    cabecera. Es la unica licencia decorativa del sistema y existe porque el
+    Decreto 18 declara una alerta que esta vigente mientras se usa el tablero.
+  */
+  .hazard-strip {
+    height: 4px;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--color-onco) 0 7px,
+      transparent 7px 14px
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

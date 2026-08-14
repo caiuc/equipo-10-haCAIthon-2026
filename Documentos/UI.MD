@@ -1,0 +1,8 @@
+Reglas de la User-Interface:
+
+- Un Login Falso que funcione con cualquier credencial ingresada de usuario y de contraseña al clickear el botón de ingreso.
+
+- Una pagina de inicio que tenga un mensaje de bienvenido y 2 botones que sean "Ingreso de paciente" y "Consultar Lista de Espera".
+Al clickear en "Ingreso de paciente" se debe desplegar un formulario que pida el ingreso del rut del paciente y despliegue la información del paciente si ya se tiene. Una vez mostrada la información del usuario, se deberá poder clickear un botón de "Actualizar Estado" que nos mostrara un formulario a rellenar con la información del paciente relacionada al calculo de la nota de puntaje.
+
+Con respecto al botón de "Consultar Lista de Espera", se deberá consultar a la base de datos del sistema y mostrar a traves de la UI un ranking en base al parámetro de puntaje otorgado por el sistema. Dentro de esta interfaz se debe mostrar: El nombre, el rut del paciente, si su diagnostico es ges o no es ges (GES en grande cuando es GES y nada si no es GES), Fecha de expiración del tratamiento (es una fecha que se determina al ser un diagnostico GES, los diagnósticos "no GES" no tienen fecha de expiración), si es un paciente ambulatorio u hospitalario y especialidad vinculada al diagnostico. Se debe poder filtrar la lista de espera por especialidad y por tipo de paciente (ambulatorio u hospitalario). Además, se debe permitir ordenar la lista por puntaje de mayor a menor y viceversa. Tambien se debe permitir ordenar por fecha de expiración del tratamiento de menor a mayor y viceversa. Tambien se debe poder ver solo pacientes GES o solo pacientes no GES. La lista de espera debe ser paginada, mostrando 10, 20 o 30 pacientes por página y permitiendo navegar entre las páginas.

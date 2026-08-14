@@ -1,0 +1,38 @@
+# Blueprint de despliegue de PROCE-SALUD en Render.
+#
+# Deja el despliegue reproducible para cualquiera del equipo: en el dashboard,
+# "New > Blueprint" apuntando a este repositorio crea los dos servicios.
+
+services:
+  # API FastAPI
+  - type: web
+    name: proce-salud-api
+    runtime: python
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.4
+
+  # Interfaz React (sitio estatico)
+  - type: web
+    name: proce-salud-ui
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    autoDeploy: true
+    envVars:
+      - key: VITE_API_URL
+        value: https://proce-salud-api.onrender.com
+    routes:
+      # El enrutamiento es del lado del cliente: cualquier ruta desconocida
+      # tiene que servir index.html o /lista-espera daria 404 al recargar.
+      - type: rewrite
+        source: /*
+        destination: /index.html
