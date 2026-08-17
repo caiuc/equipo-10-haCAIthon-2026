@@ -1,0 +1,29 @@
+{
+  "name": "PROCE-SALUD · HaCAithon 2026",
+  "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
+  "forwardPorts": [
+    8000,
+    5173
+  ],
+  "portsAttributes": {
+    "8000": {
+      "label": "Servicio 8000",
+      "onAutoForward": "silent"
+    },
+    "5173": {
+      "label": "Aplicación",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "postAttachCommand": {
+    "app": "bash -lc 'cd backend && uvicorn app.main:app --host 0.0.0.0 --port 8000 & cd frontend && npm run dev -- --host 0.0.0.0; wait'"
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "README.md"
+      ]
+    }
+  },
+  "postCreateCommand": "bash -lc 'cd backend && pip install -r requirements.txt; cd ../frontend && npm install'"
+}
